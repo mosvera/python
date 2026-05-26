@@ -16,6 +16,10 @@ shared conformance suite.
 pip install mosvera
 ```
 
+New users should start with the
+[`10-minute quickstart`](https://github.com/mosvera/spec/blob/main/docs/guides/10-minute-quickstart.md),
+which includes a Python runtime smoke after the Claude Desktop and MCP paths.
+
 The package is published on PyPI as the Python peer runtime for the
 language-neutral Mosvera spec.
 
