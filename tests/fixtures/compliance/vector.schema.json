@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mosvera.io/schema/0.1/compliance-vector",
+  "title": "Mosvera Conformance Vector",
+  "description": "A single language-agnostic conformance test case. A conforming runtime MUST produce the expected result for every vector. SPDX-License-Identifier: CC-BY-4.0.",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "description": { "type": "string" },
+    "mep": { "type": "string", "pattern": "^MEP-[0-9]{4}$" },
+    "rule": { "type": "string", "description": "Short slug naming the normative rule under test." },
+    "kind": { "type": "string", "enum": ["resolution", "compilation"] },
+    "registry": {
+      "description": "Named primitives available for reference resolution. Maps name -> primitive document.",
+      "type": "object",
+      "properties": {
+        "templates": { "type": "object", "additionalProperties": { "type": "object" } },
+        "modifiers": { "type": "object", "additionalProperties": { "type": "object" } },
+        "palettes": { "type": "object", "additionalProperties": { "type": "object" } },
+        "compositions": { "type": "object", "additionalProperties": { "type": "object" } }
+      },
+      "additionalProperties": false
+    },
+    "merge_strategies": {
+      "description": "Per-field list-merge strategy for this vector (schema-declared in real runtimes; carried inline here). Field name -> strategy.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "strategy": { "type": "string", "enum": ["replace", "append", "merge_by"] },
+          "key": { "type": "string" }
+        },
+        "required": ["strategy"]
+      }
+    },
+    "input_kind": { "type": "string", "enum": ["composition", "template", "palette", "composition_ref"] },
+    "input": {
+      "description": "For kind=resolution: the composition, template, palette document, or composition reference to resolve.",
+      "anyOf": [{ "type": "object" }, { "type": "string" }]
+    },
+    "manifest": {
+      "description": "For kind=compilation: the provider capability manifest.",
+      "type": "object"
+    },
+    "canonical": {
+      "description": "For kind=compilation: the already-resolved canonical composition to compile.",
+      "type": "object"
+    },
+    "criticality": {
+      "description": "For kind=compilation: per-construct criticality. Construct name -> required|optional. Default optional.",
+      "type": "object",
+      "additionalProperties": { "type": "string", "enum": ["required", "optional"] }
+    },
+    "expect": {
+      "type": "object",
+      "oneOf": [
+        {
+          "title": "resolution success",
+          "properties": { "canonical": { "type": "object" } },
+          "required": ["canonical"],
+          "additionalProperties": false
+        },
+        {
+          "title": "compilation success",
+          "properties": {
+            "status": { "const": "compiled" },
+            "warnings": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "construct": { "type": "string" },
+                  "action": { "type": "string", "enum": ["approximate", "emulate", "unsupported"] }
+                },
+                "required": ["construct", "action"],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": ["status", "warnings"],
+          "additionalProperties": false
+        },
+        {
+          "title": "error",
+          "properties": {
+            "status": { "const": "error" },
+            "error": {
+              "type": "string",
+              "enum": [
+                "reference_cycle",
+                "inheritance_cycle",
+                "multiple_inheritance_unsupported",
+                "unknown_reference",
+                "required_unsupported"
+              ]
+            },
+            "construct": { "type": "string" }
+          },
+          "required": ["status", "error"],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "required": ["id", "description", "mep", "rule", "kind", "expect"],
+  "additionalProperties": false
+}

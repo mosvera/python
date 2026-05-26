@@ -1,0 +1,40 @@
+{
+  "id": "0004-list-replace-default",
+  "description": "Default list strategy is replace (whole list).",
+  "mep": "MEP-0001",
+  "rule": "list/replace-default",
+  "kind": "resolution",
+  "input_kind": "composition",
+  "registry": {
+    "templates": {
+      "base_t": {
+        "id": "base_t",
+        "tags": [
+          "a",
+          "b"
+        ]
+      }
+    },
+    "modifiers": {
+      "m": {
+        "id": "m",
+        "tags": [
+          "c"
+        ]
+      }
+    }
+  },
+  "input": {
+    "base": "base_t",
+    "modifiers": [
+      "m"
+    ]
+  },
+  "expect": {
+    "canonical": {
+      "tags": [
+        "c"
+      ]
+    }
+  }
+}

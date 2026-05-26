@@ -1,0 +1,55 @@
+{
+  "id": "0014-extends-merge-by-boundary",
+  "description": "merge_by correlates list elements across the inheritance boundary by key.",
+  "mep": "MEP-0002",
+  "rule": "inheritance/merge-by-across-boundary",
+  "kind": "resolution",
+  "input_kind": "template",
+  "registry": {
+    "templates": {
+      "parent": {
+        "id": "parent",
+        "lights": [
+          {
+            "name": "key",
+            "power": 5
+          }
+        ]
+      }
+    }
+  },
+  "merge_strategies": {
+    "lights": {
+      "strategy": "merge_by",
+      "key": "name"
+    }
+  },
+  "input": {
+    "id": "child",
+    "$extends": "parent",
+    "lights": [
+      {
+        "name": "key",
+        "power": 8
+      },
+      {
+        "name": "rim",
+        "power": 1
+      }
+    ]
+  },
+  "expect": {
+    "canonical": {
+      "lights": [
+        {
+          "name": "key",
+          "power": 8
+        },
+        {
+          "name": "rim",
+          "power": 1
+        }
+      ]
+    }
+  }
+}

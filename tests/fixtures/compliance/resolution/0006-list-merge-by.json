@@ -1,0 +1,70 @@
+{
+  "id": "0006-list-merge-by",
+  "description": "merge_by correlates by key (identity, not index): matched elements deep-merge, new appended.",
+  "mep": "MEP-0001",
+  "rule": "list/merge-by-key",
+  "kind": "resolution",
+  "input_kind": "composition",
+  "registry": {
+    "templates": {
+      "base_t": {
+        "id": "base_t",
+        "lights": [
+          {
+            "name": "key",
+            "power": 5
+          },
+          {
+            "name": "fill",
+            "power": 2
+          }
+        ]
+      }
+    },
+    "modifiers": {
+      "m": {
+        "id": "m",
+        "lights": [
+          {
+            "name": "fill",
+            "power": 4
+          },
+          {
+            "name": "rim",
+            "power": 1
+          }
+        ]
+      }
+    }
+  },
+  "merge_strategies": {
+    "lights": {
+      "strategy": "merge_by",
+      "key": "name"
+    }
+  },
+  "input": {
+    "base": "base_t",
+    "modifiers": [
+      "m"
+    ]
+  },
+  "expect": {
+    "canonical": {
+      "lights": [
+        {
+          "name": "key",
+          "power": 5
+        },
+        {
+          "name": "fill",
+          "power": 4
+        },
+        {
+          "name": "rim",
+          "power": 1
+        }
+      ]
+    }
+  }
+}

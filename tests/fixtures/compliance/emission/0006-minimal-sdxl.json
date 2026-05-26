@@ -1,0 +1,22 @@
+{
+  "id": "0006-minimal-sdxl",
+  "provider": "sdxl-replicate",
+  "canonical": {
+    "subject": "a lighthouse on a basalt cliff at dusk",
+    "aspect_ratio": "3:2"
+  },
+  "expected_prompt": "a lighthouse on a basalt cliff at dusk",
+  "expected_parameters": {
+    "guidance_scale": 7.5,
+    "height": 1024,
+    "high_noise_frac": 0.8,
+    "negative_prompt": "ugly, blurry, low quality, distorted, disfigured",
+    "num_inference_steps": 35,
+    "num_outputs": 1,
+    "output_format": "png",
+    "refine": "expert_ensemble_refiner",
+    "scheduler": "K_EULER",
+    "width": 1536
+  },
+  "expected_warnings": []
+}

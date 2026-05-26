@@ -1,0 +1,41 @@
+{
+  "id": "0008-revert",
+  "description": "$revert discards this layer's own contribution, keeping the pre-layer value (m2's 99 reverted, m1's 9 kept).",
+  "mep": "MEP-0001",
+  "rule": "directive/revert",
+  "kind": "resolution",
+  "input_kind": "composition",
+  "registry": {
+    "templates": {
+      "base_t": {
+        "id": "base_t",
+        "intensity": 1
+      }
+    },
+    "modifiers": {
+      "m1": {
+        "id": "m1",
+        "intensity": 9
+      },
+      "m2": {
+        "id": "m2",
+        "intensity": 99,
+        "$revert": [
+          "intensity"
+        ]
+      }
+    }
+  },
+  "input": {
+    "base": "base_t",
+    "modifiers": [
+      "m1",
+      "m2"
+    ]
+  },
+  "expect": {
+    "canonical": {
+      "intensity": 9
+    }
+  }
+}

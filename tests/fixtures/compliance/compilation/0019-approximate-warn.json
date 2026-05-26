@@ -1,0 +1,29 @@
+{
+  "id": "0019-approximate-warn",
+  "description": "An approximate mapping compiles with a warning recording the approximation.",
+  "mep": "MEP-0003",
+  "rule": "compile/approximate-warns",
+  "kind": "compilation",
+  "manifest": {
+    "provider": "p",
+    "adapter_version": "1",
+    "constructs": {
+      "quality": {
+        "lowering_action": "approximate",
+        "note": "high -> steps=50,guidance=3.5"
+      }
+    }
+  },
+  "canonical": {
+    "quality": "high"
+  },
+  "expect": {
+    "status": "compiled",
+    "warnings": [
+      {
+        "construct": "quality",
+        "action": "approximate"
+      }
+    ]
+  }
+}

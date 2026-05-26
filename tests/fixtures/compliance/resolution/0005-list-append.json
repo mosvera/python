@@ -1,0 +1,45 @@
+{
+  "id": "0005-list-append",
+  "description": "append strategy concatenates overlay onto base list.",
+  "mep": "MEP-0001",
+  "rule": "list/append",
+  "kind": "resolution",
+  "input_kind": "composition",
+  "registry": {
+    "templates": {
+      "base_t": {
+        "id": "base_t",
+        "layers": [
+          "base"
+        ]
+      }
+    },
+    "modifiers": {
+      "m": {
+        "id": "m",
+        "layers": [
+          "grain"
+        ]
+      }
+    }
+  },
+  "merge_strategies": {
+    "layers": {
+      "strategy": "append"
+    }
+  },
+  "input": {
+    "base": "base_t",
+    "modifiers": [
+      "m"
+    ]
+  },
+  "expect": {
+    "canonical": {
+      "layers": [
+        "base",
+        "grain"
+      ]
+    }
+  }
+}

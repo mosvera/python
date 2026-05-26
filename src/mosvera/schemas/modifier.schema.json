@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mosvera.io/schema/0.1/modifier",
+  "title": "Mosvera Modifier",
+  "description": "An adjustment applied to a template or composition. A modifier is a partial aesthetic object — the delta it represents — deep-merged onto its base via the MEP-0001 merge operation (declarative-shape, not operation-based). It may use the $unset/$revert directives to remove or roll back fields. Aesthetic content is open at v0.1. SPDX-License-Identifier: Apache-2.0.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "description": "Identifies this document as a Mosvera modifier of a given version.",
+      "type": "string"
+    },
+    "id": {
+      "description": "The modifier's own name, by which compositions reference it.",
+      "$ref": "https://mosvera.io/schema/0.1/common#/$defs/reference"
+    },
+    "$unset": {
+      "description": "Fields this modifier removes from the base it is applied to (MEP-0001).",
+      "$ref": "https://mosvera.io/schema/0.1/common#/$defs/field_name_list"
+    },
+    "$revert": {
+      "description": "Fields this modifier rolls back to the pre-layer value (MEP-0001).",
+      "$ref": "https://mosvera.io/schema/0.1/common#/$defs/field_name_list"
+    }
+  },
+  "required": ["id"],
+  "patternProperties": {
+    "^[a-z][a-z0-9_]*$": {
+      "$ref": "https://mosvera.io/schema/0.1/common#/$defs/aesthetic_value"
+    }
+  },
+  "additionalProperties": false
+}

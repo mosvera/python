@@ -1,0 +1,29 @@
+{
+  "id": "0016-multiple-inheritance-rejected",
+  "description": "$extends as a list (multiple inheritance) MUST be rejected at v0.1.",
+  "mep": "MEP-0002",
+  "rule": "inheritance/single-only",
+  "kind": "resolution",
+  "input_kind": "template",
+  "registry": {
+    "templates": {
+      "a": {
+        "id": "a"
+      },
+      "b": {
+        "id": "b"
+      }
+    }
+  },
+  "input": {
+    "id": "child",
+    "$extends": [
+      "a",
+      "b"
+    ]
+  },
+  "expect": {
+    "status": "error",
+    "error": "multiple_inheritance_unsupported"
+  }
+}

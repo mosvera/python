@@ -1,0 +1,35 @@
+{
+  "id": "0002-merge-scalar-override",
+  "description": "Later layer's scalar overrides; other fields preserved.",
+  "mep": "MEP-0001",
+  "rule": "merge/scalar-override",
+  "kind": "resolution",
+  "input_kind": "composition",
+  "registry": {
+    "templates": {
+      "base_t": {
+        "id": "base_t",
+        "mood": "calm",
+        "intensity": 3
+      }
+    },
+    "modifiers": {
+      "m": {
+        "id": "m",
+        "mood": "tense"
+      }
+    }
+  },
+  "input": {
+    "base": "base_t",
+    "modifiers": [
+      "m"
+    ]
+  },
+  "expect": {
+    "canonical": {
+      "mood": "tense",
+      "intensity": 3
+    }
+  }
+}

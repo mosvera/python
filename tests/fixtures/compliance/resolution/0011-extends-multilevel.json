@@ -1,0 +1,36 @@
+{
+  "id": "0011-extends-multilevel",
+  "description": "Multi-level chain root->mid->leaf folds with later (more-derived) winning.",
+  "mep": "MEP-0002",
+  "rule": "inheritance/linear-chain",
+  "kind": "resolution",
+  "input_kind": "template",
+  "registry": {
+    "templates": {
+      "root": {
+        "id": "root",
+        "a": 1,
+        "b": 1,
+        "c": 1
+      },
+      "mid": {
+        "id": "mid",
+        "$extends": "root",
+        "b": 2,
+        "c": 2
+      }
+    }
+  },
+  "input": {
+    "id": "leaf",
+    "$extends": "mid",
+    "c": 3
+  },
+  "expect": {
+    "canonical": {
+      "a": 1,
+      "b": 2,
+      "c": 3
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "id": "0012-inheritance-then-composition",
+  "description": "A base template's inheritance is resolved first, then composition modifiers apply on top.",
+  "mep": "MEP-0002",
+  "rule": "inheritance/resolved-before-composition",
+  "kind": "resolution",
+  "input_kind": "composition",
+  "registry": {
+    "templates": {
+      "parent": {
+        "id": "parent",
+        "a": 1,
+        "b": 1
+      },
+      "base_t": {
+        "id": "base_t",
+        "$extends": "parent",
+        "b": 2
+      }
+    },
+    "modifiers": {
+      "m": {
+        "id": "m",
+        "c": 3
+      }
+    }
+  },
+  "input": {
+    "base": "base_t",
+    "modifiers": [
+      "m"
+    ]
+  },
+  "expect": {
+    "canonical": {
+      "a": 1,
+      "b": 2,
+      "c": 3
+    }
+  }
+}

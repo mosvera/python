@@ -1,0 +1,28 @@
+{
+  "id": "0010-extends-single-override",
+  "description": "Single inheritance: child overrides parent; inherited fields preserved.",
+  "mep": "MEP-0002",
+  "rule": "inheritance/child-overrides-parent",
+  "kind": "resolution",
+  "input_kind": "template",
+  "registry": {
+    "templates": {
+      "parent": {
+        "id": "parent",
+        "mood": "calm",
+        "grain": 0.2
+      }
+    }
+  },
+  "input": {
+    "id": "child",
+    "$extends": "parent",
+    "mood": "tense"
+  },
+  "expect": {
+    "canonical": {
+      "mood": "tense",
+      "grain": 0.2
+    }
+  }
+}

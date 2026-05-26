@@ -1,0 +1,47 @@
+{
+  "id": "0024-named-composition-resolution",
+  "description": "A named composition stored in the registry resolves through the same precedence chain as an inline composition.",
+  "mep": "MEP-0001",
+  "rule": "composition/named-registry-entry",
+  "kind": "resolution",
+  "input_kind": "composition_ref",
+  "registry": {
+    "templates": {
+      "base_t": {
+        "id": "base_t",
+        "palette": {
+          "accent": "#3366ff"
+        },
+        "density": "comfortable"
+      }
+    },
+    "modifiers": {
+      "executive": {
+        "id": "executive",
+        "density": "compact"
+      }
+    },
+    "compositions": {
+      "executive-editorial": {
+        "id": "executive-editorial",
+        "base": "base_t",
+        "modifiers": [
+          "executive"
+        ],
+        "overrides": {
+          "tone": "editorial"
+        }
+      }
+    }
+  },
+  "input": "executive-editorial",
+  "expect": {
+    "canonical": {
+      "palette": {
+        "accent": "#3366ff"
+      },
+      "density": "compact",
+      "tone": "editorial"
+    }
+  }
+}

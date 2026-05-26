@@ -1,0 +1,38 @@
+{
+  "id": "0022-palette-extends",
+  "description": "A palette MAY extend one parent palette and merge roles root-first.",
+  "mep": "MEP-0002",
+  "rule": "palette/inheritance-single-parent",
+  "kind": "resolution",
+  "input_kind": "palette",
+  "registry": {
+    "palettes": {
+      "brand": {
+        "id": "brand",
+        "roles": {
+          "background": "#ffffff",
+          "ink": "#101010",
+          "accent": "#3366ff"
+        }
+      }
+    }
+  },
+  "input": {
+    "id": "executive",
+    "$extends": "brand",
+    "roles": {
+      "accent": "#7a4ce0",
+      "highlight": "#f4cf58"
+    }
+  },
+  "expect": {
+    "canonical": {
+      "roles": {
+        "background": "#ffffff",
+        "ink": "#101010",
+        "accent": "#7a4ce0",
+        "highlight": "#f4cf58"
+      }
+    }
+  }
+}

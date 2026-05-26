@@ -1,0 +1,43 @@
+{
+  "id": "0001-merge-object-deep",
+  "description": "Nested objects deep-merge; untouched keys preserved.",
+  "mep": "MEP-0001",
+  "rule": "merge/object-deep",
+  "kind": "resolution",
+  "input_kind": "composition",
+  "registry": {
+    "templates": {
+      "base_t": {
+        "id": "base_t",
+        "lighting": {
+          "key": "soft",
+          "fill": "low"
+        }
+      }
+    },
+    "modifiers": {
+      "m": {
+        "id": "m",
+        "lighting": {
+          "fill": "high",
+          "rim": "on"
+        }
+      }
+    }
+  },
+  "input": {
+    "base": "base_t",
+    "modifiers": [
+      "m"
+    ]
+  },
+  "expect": {
+    "canonical": {
+      "lighting": {
+        "key": "soft",
+        "fill": "high",
+        "rim": "on"
+      }
+    }
+  }
+}

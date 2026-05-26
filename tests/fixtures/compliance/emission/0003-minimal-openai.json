@@ -1,0 +1,16 @@
+{
+  "id": "0003-minimal-openai",
+  "provider": "openai-gpt-image-1",
+  "canonical": {
+    "subject": "a lighthouse on a basalt cliff at dusk",
+    "aspect_ratio": "3:2"
+  },
+  "expected_prompt": "a lighthouse on a basalt cliff at dusk",
+  "expected_parameters": {
+    "model": "gpt-image-1",
+    "n": 1,
+    "output_format": "png",
+    "size": "1536x1024"
+  },
+  "expected_warnings": []
+}

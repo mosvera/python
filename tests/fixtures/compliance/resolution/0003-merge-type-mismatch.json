@@ -1,0 +1,39 @@
+{
+  "id": "0003-merge-type-mismatch",
+  "description": "Type mismatch (scalar base, object overlay): overlay replaces.",
+  "mep": "MEP-0001",
+  "rule": "merge/type-mismatch-replace",
+  "kind": "resolution",
+  "input_kind": "composition",
+  "registry": {
+    "templates": {
+      "base_t": {
+        "id": "base_t",
+        "grade": "warm"
+      }
+    },
+    "modifiers": {
+      "m": {
+        "id": "m",
+        "grade": {
+          "hue": "amber",
+          "strength": 2
+        }
+      }
+    }
+  },
+  "input": {
+    "base": "base_t",
+    "modifiers": [
+      "m"
+    ]
+  },
+  "expect": {
+    "canonical": {
+      "grade": {
+        "hue": "amber",
+        "strength": 2
+      }
+    }
+  }
+}

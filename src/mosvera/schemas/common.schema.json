@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mosvera.io/schema/0.1/common",
+  "title": "Mosvera Common Definitions",
+  "description": "Shared definitions used across Mosvera v0.1 schemas. SPDX-License-Identifier: Apache-2.0. $id is rooted at the canonical domain (https://mosvera.io/schema/0.1/); it is a stable namespace identifier and need not be dereferenceable.",
+  "$defs": {
+    "field_name": {
+      "description": "A snake_case aesthetic field name per ADR-0005: ASCII lowercase, digits, underscore; must start with a letter. No hyphens, no uppercase, no dots, no leading $.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "field_name_list": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/field_name" },
+      "uniqueItems": true
+    },
+    "reference": {
+      "description": "A reference to another Mosvera primitive by name. Resolved lazily into the canonical model per MEP-0001; the reference graph MUST be a DAG (MEP-0001/0002 cycle-detection conformance requirement).",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*$"
+    },
+    "aesthetic_value": {
+      "description": "A value within an aesthetic object: a scalar, a nested aesthetic object, or a list. The aesthetic vocabulary is intentionally open at v0.1; only structure and naming are constrained.",
+      "anyOf": [
+        { "type": "string" },
+        { "type": "number" },
+        { "type": "boolean" },
+        { "type": "null" },
+        { "$ref": "#/$defs/aesthetic_object" },
+        { "type": "array", "items": { "$ref": "#/$defs/aesthetic_value" } }
+      ]
+    },
+    "aesthetic_object": {
+      "description": "A structured aesthetic object. Content keys are snake_case field names (ADR-0005). The composition/merge directives $unset and $revert (MEP-0001) are the only permitted $-prefixed keys; any other $-prefixed key is rejected. user-defined fields MUST NOT begin with $.",
+      "type": "object",
+      "properties": {
+        "$unset": {
+          "description": "Remove the named fields from the result of merging this object (MEP-0001 deletion directive). Never overloads null as a deletion sentinel.",
+          "$ref": "#/$defs/field_name_list"
+        },
+        "$revert": {
+          "description": "Roll the named fields back to the value held before this layer contributed (MEP-0001 partial rollback, modeled on CSS revert).",
+          "$ref": "#/$defs/field_name_list"
+        }
+      },
+      "patternProperties": {
+        "^[a-z][a-z0-9_]*$": { "$ref": "#/$defs/aesthetic_value" }
+      },
+      "additionalProperties": false
+    },
+    "merge_strategy": {
+      "description": "Declares how a list-valued field merges, per MEP-0001. Carried as a schema annotation (x-mosvera-merge) on list fields; the default when absent is 'replace'. Index-based merge is forbidden.",
+      "type": "object",
+      "properties": {
+        "strategy": {
+          "type": "string",
+          "enum": ["replace", "append", "merge_by"]
+        },
+        "key": {
+          "description": "Required when strategy is merge_by: the field name elements are correlated by (identity-based, not positional).",
+          "$ref": "#/$defs/field_name"
+        }
+      },
+      "required": ["strategy"],
+      "allOf": [
+        {
+          "if": { "properties": { "strategy": { "const": "merge_by" } } },
+          "then": { "required": ["key"] }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "criticality": {
+      "description": "Whether a canonical construct is required (a provider that cannot represent it MUST error) or optional (a provider may degrade and warn). Per MEP-0003, modeled on glTF required/optional extensions. Default is declared per construct type.",
+      "type": "string",
+      "enum": ["required", "optional"],
+      "default": "optional"
+    },
+    "lowering_action": {
+      "description": "How a provider adapter represents a canonical construct, per MEP-0003 (closed enum modeled on LLVM setOperationAction).",
+      "type": "string",
+      "enum": ["native", "approximate", "emulate", "unsupported"]
+    }
+  }
+}

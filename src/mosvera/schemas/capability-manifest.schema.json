@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mosvera.io/schema/0.1/capability-manifest",
+  "title": "Mosvera Provider Capability Manifest",
+  "description": "A provider adapter's machine-readable declaration of which canonical constructs it can represent and the lowering action for each (MEP-0003). The runtime validates a resolved composition against this manifest before compilation. A construct not listed is treated as 'unsupported'. Capability claims MUST NOT be silently inherited — each concrete adapter re-declares its manifest. SPDX-License-Identifier: Apache-2.0.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "description": "Identifies this document as a Mosvera capability manifest of a given version.",
+      "type": "string"
+    },
+    "provider": {
+      "description": "The provider/adapter identifier this manifest describes (e.g. openai-gpt-image-1, bfl-flux-2-pro).",
+      "$ref": "https://mosvera.io/schema/0.1/common#/$defs/reference"
+    },
+    "adapter_version": {
+      "description": "The adapter version this manifest corresponds to. Part of the determinism contract: compilation is a deterministic function of (composition, adapter version, manifest).",
+      "type": "string"
+    },
+    "constructs": {
+      "description": "Map of canonical construct name (snake_case) to its lowering action and optional notes. A construct absent from this map is treated as 'unsupported'.",
+      "type": "object",
+      "propertyNames": { "$ref": "https://mosvera.io/schema/0.1/common#/$defs/field_name" },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "lowering_action": { "$ref": "https://mosvera.io/schema/0.1/common#/$defs/lowering_action" },
+          "note": {
+            "description": "Human-readable explanation of an approximate/emulate mapping (e.g. 'quality:high -> steps=50, guidance=3.5'). Required when the action is approximate or emulate, so that loss is documented.",
+            "type": "string"
+          }
+        },
+        "required": ["lowering_action"],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "lowering_action": { "enum": ["approximate", "emulate"] }
+              },
+              "required": ["lowering_action"]
+            },
+            "then": { "required": ["note"] }
+          }
+        ],
+        "unevaluatedProperties": false
+      }
+    }
+  },
+  "required": ["provider", "adapter_version", "constructs"],
+  "additionalProperties": false
+}

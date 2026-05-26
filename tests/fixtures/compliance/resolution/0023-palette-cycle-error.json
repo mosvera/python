@@ -1,0 +1,37 @@
+{
+  "id": "0023-palette-cycle-error",
+  "description": "A cyclic palette $extends graph MUST error; no resolved palette emitted.",
+  "mep": "MEP-0002",
+  "rule": "palette/cycle-detection",
+  "kind": "resolution",
+  "input_kind": "palette",
+  "registry": {
+    "palettes": {
+      "a": {
+        "id": "a",
+        "$extends": "b",
+        "roles": {
+          "accent": "#111111"
+        }
+      },
+      "b": {
+        "id": "b",
+        "$extends": "a",
+        "roles": {
+          "accent": "#222222"
+        }
+      }
+    }
+  },
+  "input": {
+    "id": "c",
+    "$extends": "a",
+    "roles": {
+      "accent": "#333333"
+    }
+  },
+  "expect": {
+    "status": "error",
+    "error": "inheritance_cycle"
+  }
+}

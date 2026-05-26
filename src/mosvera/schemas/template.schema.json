@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mosvera.io/schema/0.1/template",
+  "title": "Mosvera Template",
+  "description": "A reusable aesthetic starting point. A template MAY extend exactly one parent template via $extends (single inheritance, MEP-0002). Its aesthetic content is an open object at v0.1 — structure and naming are constrained, the aesthetic vocabulary is not yet frozen. SPDX-License-Identifier: Apache-2.0.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "description": "Identifies this document as a Mosvera template of a given version.",
+      "type": "string"
+    },
+    "id": {
+      "description": "The template's own name, by which compositions and other templates reference it.",
+      "$ref": "https://mosvera.io/schema/0.1/common#/$defs/reference"
+    },
+    "$extends": {
+      "description": "Single-inheritance parent reference (MEP-0002). Resolved as a linear ancestor chain folded with the merge operation; the inheritance graph MUST be a DAG (cycle detection is a conformance requirement). A list value is NOT permitted at v0.1 — multiple inheritance is a gated future possibility.",
+      "$ref": "https://mosvera.io/schema/0.1/common#/$defs/reference"
+    },
+    "$unset": { "$ref": "https://mosvera.io/schema/0.1/common#/$defs/field_name_list" },
+    "$revert": { "$ref": "https://mosvera.io/schema/0.1/common#/$defs/field_name_list" }
+  },
+  "required": ["id"],
+  "patternProperties": {
+    "^[a-z][a-z0-9_]*$": {
+      "$ref": "https://mosvera.io/schema/0.1/common#/$defs/aesthetic_value"
+    }
+  },
+  "additionalProperties": false
+}

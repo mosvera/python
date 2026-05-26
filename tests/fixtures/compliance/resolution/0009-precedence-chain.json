@@ -1,0 +1,48 @@
+{
+  "id": "0009-precedence-chain",
+  "description": "Total precedence: base < m1 < m2 < overrides. Later always wins.",
+  "mep": "MEP-0001",
+  "rule": "precedence/later-wins",
+  "kind": "resolution",
+  "input_kind": "composition",
+  "registry": {
+    "templates": {
+      "base_t": {
+        "id": "base_t",
+        "a": 1,
+        "b": 1,
+        "c": 1,
+        "d": 1
+      }
+    },
+    "modifiers": {
+      "m1": {
+        "id": "m1",
+        "b": 2,
+        "c": 2
+      },
+      "m2": {
+        "id": "m2",
+        "c": 3
+      }
+    }
+  },
+  "input": {
+    "base": "base_t",
+    "modifiers": [
+      "m1",
+      "m2"
+    ],
+    "overrides": {
+      "d": 4
+    }
+  },
+  "expect": {
+    "canonical": {
+      "a": 1,
+      "b": 2,
+      "c": 3,
+      "d": 4
+    }
+  }
+}

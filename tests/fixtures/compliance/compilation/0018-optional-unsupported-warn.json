@@ -1,0 +1,32 @@
+{
+  "id": "0018-optional-unsupported-warn",
+  "description": "An optional construct the adapter cannot represent compiles with a warning (dropped), never silently.",
+  "mep": "MEP-0003",
+  "rule": "compile/optional-unsupported-warns",
+  "kind": "compilation",
+  "manifest": {
+    "provider": "p",
+    "adapter_version": "1",
+    "constructs": {
+      "subject": {
+        "lowering_action": "native"
+      }
+    }
+  },
+  "canonical": {
+    "subject": "a lighthouse",
+    "grain": 0.3
+  },
+  "criticality": {
+    "grain": "optional"
+  },
+  "expect": {
+    "status": "compiled",
+    "warnings": [
+      {
+        "construct": "grain",
+        "action": "unsupported"
+      }
+    ]
+  }
+}

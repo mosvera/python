@@ -1,0 +1,19 @@
+{
+  "id": "0025-unknown-reference-error",
+  "description": "A composition that references a missing base template MUST return unknown_reference.",
+  "mep": "MEP-0001",
+  "rule": "composition/missing-reference",
+  "kind": "resolution",
+  "input_kind": "composition",
+  "registry": {
+    "templates": {},
+    "modifiers": {}
+  },
+  "input": {
+    "base": "missing_base"
+  },
+  "expect": {
+    "status": "error",
+    "error": "unknown_reference"
+  }
+}

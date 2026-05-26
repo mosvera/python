@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mosvera.io/schema/0.1/palette",
+  "title": "Mosvera Palette",
+  "description": "A structured set of color, light, and tonal relationships with explicit semantic roles. Roles map a snake_case role name (e.g. background, accent, highlight, shadow) to a color value. Per ADR-0006, the palette aims for Design Tokens Community Group (DTCG) compatibility at the color-token export boundary; DTCG alias syntax interop is a future target. Color value format is intentionally open at v0.1. SPDX-License-Identifier: Apache-2.0.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "description": "Identifies this document as a Mosvera palette of a given version.",
+      "type": "string"
+    },
+    "id": {
+      "description": "The palette's own name, by which templates and compositions reference it.",
+      "$ref": "https://mosvera.io/schema/0.1/common#/$defs/reference"
+    },
+    "$extends": {
+      "description": "Optional single-inheritance parent palette (MEP-0002 applies to palettes as to templates). Cross-primitive inheritance is flagged as an open question in MEP-0002; permitted here provisionally for palette-to-palette extension only.",
+      "$ref": "https://mosvera.io/schema/0.1/common#/$defs/reference"
+    },
+    "roles": {
+      "description": "Map of semantic role name (snake_case) to color value. The role vocabulary is open at v0.1. Value format (hex, rgb, named, or a future DTCG-style alias) is not constrained yet.",
+      "type": "object",
+      "propertyNames": { "$ref": "https://mosvera.io/schema/0.1/common#/$defs/field_name" },
+      "additionalProperties": {
+        "description": "A color value. Format intentionally unconstrained at v0.1.",
+        "type": "string"
+      }
+    },
+    "$unset": { "$ref": "https://mosvera.io/schema/0.1/common#/$defs/field_name_list" },
+    "$revert": { "$ref": "https://mosvera.io/schema/0.1/common#/$defs/field_name_list" }
+  },
+  "required": ["id", "roles"],
+  "additionalProperties": false
+}

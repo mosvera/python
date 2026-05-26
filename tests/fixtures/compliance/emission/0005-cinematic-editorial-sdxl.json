@@ -1,0 +1,45 @@
+{
+  "id": "0005-cinematic-editorial-sdxl",
+  "provider": "sdxl-replicate",
+  "canonical": {
+    "subject": "a lighthouse on a basalt cliff at dusk",
+    "medium": "cinematic",
+    "lighting": { "mood": "warm", "scheme": "three_point" },
+    "lights": [
+      { "name": "key", "power": 6 },
+      { "name": "fill", "power": 5 },
+      { "name": "rim", "power": 2 }
+    ],
+    "color_grade": { "contrast": "very_high", "saturation": "desaturated" },
+    "color_temperature": "warm",
+    "palette": { "accent": "#c8943f" },
+    "aspect_ratio": "3:2",
+    "quality": "high",
+    "safety": "standard"
+  },
+  "expected_prompt": "a lighthouse on a basalt cliff at dusk, cinematic style, warm lighting, three-point lighting setup, key light at power 6, fill light at power 5, rim light at power 2, very high contrast, desaturated saturation, warm tones, accent color (#c8943f)",
+  "expected_parameters": {
+    "guidance_scale": 10,
+    "height": 1024,
+    "high_noise_frac": 0.8,
+    "negative_prompt": "ugly, blurry, low quality, distorted, disfigured",
+    "num_inference_steps": 50,
+    "num_outputs": 1,
+    "output_format": "png",
+    "refine": "expert_ensemble_refiner",
+    "scheduler": "K_EULER",
+    "width": 1536
+  },
+  "expected_warnings": [
+    { "construct": "color_grade.contrast", "action": "approximate" },
+    { "construct": "color_grade.saturation", "action": "approximate" },
+    { "construct": "color_temperature", "action": "approximate" },
+    { "construct": "lighting.mood", "action": "approximate" },
+    { "construct": "lighting.scheme", "action": "approximate" },
+    { "construct": "lights", "action": "emulate" },
+    { "construct": "medium", "action": "approximate" },
+    { "construct": "palette.accent", "action": "approximate" },
+    { "construct": "quality", "action": "approximate" },
+    { "construct": "safety", "action": "unsupported" }
+  ]
+}

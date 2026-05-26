@@ -1,0 +1,32 @@
+{
+  "id": "0021-required-approximate-warns",
+  "description": "A required construct that is approximate (not unsupported) compiles with a warning, not an error.",
+  "mep": "MEP-0003",
+  "rule": "compile/required-approximate-warns-not-errors",
+  "kind": "compilation",
+  "manifest": {
+    "provider": "p",
+    "adapter_version": "1",
+    "constructs": {
+      "accent": {
+        "lowering_action": "approximate",
+        "note": "nearest in gamut"
+      }
+    }
+  },
+  "canonical": {
+    "accent": "#c0563a"
+  },
+  "criticality": {
+    "accent": "required"
+  },
+  "expect": {
+    "status": "compiled",
+    "warnings": [
+      {
+        "construct": "accent",
+        "action": "approximate"
+      }
+    ]
+  }
+}

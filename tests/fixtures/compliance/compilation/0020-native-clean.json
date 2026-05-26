@@ -1,0 +1,27 @@
+{
+  "id": "0020-native-clean",
+  "description": "All-native compilation produces no warnings.",
+  "mep": "MEP-0003",
+  "rule": "compile/native-clean",
+  "kind": "compilation",
+  "manifest": {
+    "provider": "p",
+    "adapter_version": "1",
+    "constructs": {
+      "subject": {
+        "lowering_action": "native"
+      },
+      "aspect_ratio": {
+        "lowering_action": "native"
+      }
+    }
+  },
+  "canonical": {
+    "subject": "a lighthouse",
+    "aspect_ratio": "3:2"
+  },
+  "expect": {
+    "status": "compiled",
+    "warnings": []
+  }
+}
