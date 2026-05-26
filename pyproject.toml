@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "mosvera"
-version = "0.1.0"
+version = "0.1.1"
 description = "Python runtime for Mosvera: load aesthetic registries, resolve named compositions, compile neutral tokens, validate schemas, and apply merge/compile semantics."
 readme = "README.md"
 requires-python = ">=3.10"

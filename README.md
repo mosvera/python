@@ -15,8 +15,8 @@ TypeScript/JavaScript package against the shared conformance suite.
 pip install mosvera
 ```
 
-The package is not published yet. Until the first coordinated JS/Python
-release, install from a local checkout.
+The package is published on PyPI as the Python peer runtime for the
+language-neutral Mosvera spec.
 
 ## Basic Use
 
