@@ -14,6 +14,7 @@ DocumentKind: TypeAlias = Literal[
     "modifier",
     "palette",
     "capability-manifest",
+    "aesthetic-pack",
 ]
 LoweringAction: TypeAlias = Literal["native", "approximate", "emulate", "unsupported"]
 Criticality: TypeAlias = Literal["required", "optional"]
@@ -29,6 +30,7 @@ RegistryDiagnosticCode: TypeAlias = Literal[
     "duplicate_id",
     "unsafe_filename",
     "schema_failure",
+    "strategy_conflict",
 ]
 
 
@@ -43,6 +45,9 @@ CapabilityManifest: TypeAlias = dict[str, Any]
 CompileResult: TypeAlias = dict[str, Any]
 DesignTokens: TypeAlias = dict[str, Any]
 CssVariableMap: TypeAlias = dict[str, str]
+AestheticPack: TypeAlias = JsonObject
+AestheticPackImportPlan: TypeAlias = dict[str, Any]
+AestheticPackImportResult: TypeAlias = dict[str, Any]
 
 
 @dataclass(frozen=True)
@@ -76,7 +81,7 @@ class RegistryReference:
 class RegistryDiagnostic:
     code: RegistryDiagnosticCode
     message: str
-    kind: RegistryKind | Literal["capability-manifest"] | None = None
+    kind: RegistryKind | Literal["capability-manifest", "aesthetic-pack"] | None = None
     id: str | None = None
     path: str | None = None
     reference: RegistryReference | None = None

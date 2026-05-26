@@ -19,6 +19,7 @@ SCHEMA_FILES = [
     "modifier.schema.json",
     "palette.schema.json",
     "capability-manifest.schema.json",
+    "aesthetic-pack.schema.json",
 ]
 
 KIND_TO_ID: dict[DocumentKind, str] = {
@@ -27,6 +28,7 @@ KIND_TO_ID: dict[DocumentKind, str] = {
     "modifier": "https://mosvera.io/schema/0.1/modifier",
     "palette": "https://mosvera.io/schema/0.1/palette",
     "capability-manifest": "https://mosvera.io/schema/0.1/capability-manifest",
+    "aesthetic-pack": "https://mosvera.io/schema/0.1/aesthetic-pack",
 }
 
 

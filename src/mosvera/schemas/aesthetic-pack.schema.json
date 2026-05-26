@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mosvera.io/schema/0.1/aesthetic-pack",
+  "title": "Mosvera Aesthetic Pack",
+  "description": "A portable .mosvera.json exchange file for moving a named Mosvera aesthetic and its local registry dependencies between projects. V1 packs contain registry documents and optional merge strategies only; they do not contain assets, provider manifests, credentials, remote URLs, or bundled archives. SPDX-License-Identifier: Apache-2.0.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "description": "Identifies this document as a Mosvera aesthetic pack of a given version.",
+      "type": "string"
+    },
+    "kind": {
+      "description": "Closed discriminator for v1 aesthetic pack files.",
+      "const": "mosvera.aesthetic_pack"
+    },
+    "version": {
+      "description": "Aesthetic pack format version.",
+      "const": "0.1"
+    },
+    "id": {
+      "description": "Pack identifier. This identifies the exchange file, not necessarily the entrypoint composition.",
+      "$ref": "https://mosvera.io/schema/0.1/common#/$defs/reference"
+    },
+    "name": {
+      "description": "Optional human-readable pack name.",
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "description": "Optional short human-readable pack description.",
+      "type": "string"
+    },
+    "entrypoint": {
+      "description": "The named aesthetic an importer should expose after installing this pack.",
+      "type": "object",
+      "properties": {
+        "kind": { "const": "composition" },
+        "id": { "$ref": "https://mosvera.io/schema/0.1/common#/$defs/reference" }
+      },
+      "required": ["kind", "id"],
+      "additionalProperties": false
+    },
+    "documents": {
+      "description": "Registry documents carried by the pack. Object keys MUST match each document's id; runtimes enforce that invariant during pack validation.",
+      "type": "object",
+      "properties": {
+        "templates": {
+          "type": "object",
+          "propertyNames": { "$ref": "https://mosvera.io/schema/0.1/common#/$defs/reference" },
+          "additionalProperties": { "$ref": "https://mosvera.io/schema/0.1/template" }
+        },
+        "palettes": {
+          "type": "object",
+          "propertyNames": { "$ref": "https://mosvera.io/schema/0.1/common#/$defs/reference" },
+          "additionalProperties": { "$ref": "https://mosvera.io/schema/0.1/palette" }
+        },
+        "modifiers": {
+          "type": "object",
+          "propertyNames": { "$ref": "https://mosvera.io/schema/0.1/common#/$defs/reference" },
+          "additionalProperties": { "$ref": "https://mosvera.io/schema/0.1/modifier" }
+        },
+        "compositions": {
+          "type": "object",
+          "propertyNames": { "$ref": "https://mosvera.io/schema/0.1/common#/$defs/reference" },
+          "additionalProperties": {
+            "allOf": [
+              { "$ref": "https://mosvera.io/schema/0.1/composition" },
+              { "required": ["id"] }
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "merge_strategies": {
+      "description": "Optional merge strategy declarations needed by the carried documents.",
+      "type": "object",
+      "propertyNames": { "$ref": "https://mosvera.io/schema/0.1/common#/$defs/field_name" },
+      "additionalProperties": { "$ref": "https://mosvera.io/schema/0.1/common#/$defs/merge_strategy" }
+    }
+  },
+  "required": ["kind", "version", "id", "entrypoint", "documents"],
+  "additionalProperties": false
+}

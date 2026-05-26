@@ -3,6 +3,13 @@
 from .compile import compile, compile_contract
 from .errors import RegistryProjectError, ResolutionError
 from .merge import merge
+from .pack import (
+    collect_aesthetic_pack_dependencies,
+    export_aesthetic_pack,
+    import_aesthetic_pack,
+    preview_aesthetic_pack_import,
+    validate_aesthetic_pack,
+)
 from .parser import parse
 from .project import (
     delete_project_document,
@@ -34,6 +41,9 @@ from .resolve import (
 from .strategies import derive_strategies
 from .tokens import compile_design_tokens, to_css_variables
 from .types import (
+    AestheticPack,
+    AestheticPackImportPlan,
+    AestheticPackImportResult,
     CapabilityManifest,
     CompileResult,
     Criticality,
@@ -59,6 +69,9 @@ from .types import (
 from .validator import Validator, create_validator
 
 __all__ = [
+    "AestheticPack",
+    "AestheticPackImportPlan",
+    "AestheticPackImportResult",
     "CapabilityManifest",
     "CompileResult",
     "Criticality",
@@ -84,6 +97,7 @@ __all__ = [
     "ValidationResult",
     "Validator",
     "collect_references",
+    "collect_aesthetic_pack_dependencies",
     "compile",
     "compile_contract",
     "compile_design_tokens",
@@ -95,12 +109,15 @@ __all__ = [
     "create_validator",
     "delete_project_document",
     "derive_strategies",
+    "export_aesthetic_pack",
     "get_registry_document",
+    "import_aesthetic_pack",
     "list_registry_entries",
     "load_project",
     "merge",
     "merge_registry",
     "parse",
+    "preview_aesthetic_pack_import",
     "remove_registry_document",
     "resolve_aesthetic",
     "resolve_composition",
@@ -111,5 +128,6 @@ __all__ = [
     "to_css_variables",
     "upsert_registry_document",
     "validate_registry",
+    "validate_aesthetic_pack",
     "write_merge_strategies",
 ]

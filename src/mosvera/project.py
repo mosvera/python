@@ -24,6 +24,7 @@ from .types import (
 from .validator import Validator, create_validator
 
 DOC_EXT_RE = re.compile(r"\.(json|ya?ml)$", re.IGNORECASE)
+PACK_EXT_RE = re.compile(r"\.mosvera\.json$", re.IGNORECASE)
 SAFE_ID_RE = re.compile(r"^[a-z][a-z0-9_-]*$")
 
 ID_TO_KIND: dict[str, DocumentKind] = {
@@ -52,7 +53,7 @@ def _classify(doc: JsonObject, file: str) -> DocumentKind:
     raise ValueError(f'cannot classify document "{file}"')
 
 
-DiagnosticKind = RegistryKind | Literal["capability-manifest"]
+DiagnosticKind = RegistryKind | Literal["capability-manifest", "aesthetic-pack"]
 
 
 def _diagnostic(
@@ -203,6 +204,9 @@ def _load_doc_file(
         project.manifests[provider] = doc
         return
 
+    if kind == "aesthetic-pack":
+        raise ValueError(f'aesthetic pack files are not registry documents: "{rel_file}"')
+
     collection = _registry_collection(project.registry, kind)
     doc_id = _require_id(doc, kind, rel_file)
     if doc_id in collection:
@@ -237,6 +241,7 @@ def load_project(directory: str | Path, validator: Validator | None = None) -> L
         if (
             entry.is_file()
             and DOC_EXT_RE.search(entry.name)
+            and not PACK_EXT_RE.search(entry.name)
             and entry.name != "merge-strategies.json"
         ):
             _load_doc_file(root, entry.name, active_validator, project, diagnostics)
