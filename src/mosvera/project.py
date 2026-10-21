@@ -25,6 +25,17 @@ from .validator import Validator, create_validator
 
 DOC_EXT_RE = re.compile(r"\.(json|ya?ml)$", re.IGNORECASE)
 PACK_EXT_RE = re.compile(r"\.mosvera\.json$", re.IGNORECASE)
+REGISTRY_KIND_PREFIX_RE = re.compile(r"^(template|modifier|palette|composition)\.", re.IGNORECASE)
+
+
+def _is_aesthetic_pack_file(name: str) -> bool:
+    # Registry docs are `<kind>.<id>.json`. An id of `mosvera` yields
+    # `palette.mosvera.json`, which must load as a registry document, not a pack.
+    if not PACK_EXT_RE.search(name):
+        return False
+    return not REGISTRY_KIND_PREFIX_RE.match(name)
+
+
 SAFE_ID_RE = re.compile(r"^[a-z][a-z0-9_-]*$")
 
 ID_TO_KIND: dict[str, DocumentKind] = {
@@ -241,7 +252,7 @@ def load_project(directory: str | Path, validator: Validator | None = None) -> L
         if (
             entry.is_file()
             and DOC_EXT_RE.search(entry.name)
-            and not PACK_EXT_RE.search(entry.name)
+            and not _is_aesthetic_pack_file(entry.name)
             and entry.name != "merge-strategies.json"
         ):
             _load_doc_file(root, entry.name, active_validator, project, diagnostics)

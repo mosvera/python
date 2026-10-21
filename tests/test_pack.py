@@ -7,6 +7,7 @@ from pathlib import Path
 from mosvera import (
     create_composition,
     create_modifier,
+    create_palette,
     create_template,
     create_validator,
     export_aesthetic_pack,
@@ -135,3 +136,23 @@ def test_project_loader_ignores_pack_files(tmp_path: Path) -> None:
         encoding="utf8",
     )
     assert sorted(load_project(tmp_path).registry["templates"]) == ["base"]
+
+
+def test_project_loader_loads_registry_documents_whose_id_is_mosvera(tmp_path: Path) -> None:
+    # Parity with the TypeScript runtime fix (OB-59048): a registry document
+    # named `<kind>.mosvera.json` is a document, not an aesthetic pack.
+    save_project_document(tmp_path, "template", create_template("base_t"), create_directory=True)
+    save_project_document(tmp_path, "template", create_template("mosvera"))
+    save_project_document(tmp_path, "modifier", create_modifier("mosvera"))
+    save_project_document(tmp_path, "palette", create_palette("ink", {"accent": "#111111"}))
+    save_project_document(tmp_path, "palette", create_palette("mosvera", {"accent": "#000000"}))
+    save_project_document(tmp_path, "composition", create_composition("mosvera", "base_t"))
+    (tmp_path / "executive-editorial.mosvera.json").write_text(
+        '{"kind":"mosvera.aesthetic_pack","version":"0.1","id":"bad","entrypoint":{"kind":"composition","id":"bad"},"documents":{}}',
+        encoding="utf8",
+    )
+    project = load_project(tmp_path)
+    assert sorted(project.registry["templates"]) == ["base_t", "mosvera"]
+    assert sorted(project.registry["modifiers"]) == ["mosvera"]
+    assert sorted(project.registry["palettes"]) == ["ink", "mosvera"]
+    assert sorted(project.registry["compositions"]) == ["mosvera"]
